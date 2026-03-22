@@ -1,10 +1,9 @@
 <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="120" height="120" fill="#080608"/>
-  <polygon points="60,10 110,85 10,85" stroke="#c9922a" stroke-width="1.5" fill="none"/>
-  <polygon points="60,110 10,35 110,35" stroke="#c9922a60" stroke-width="1" fill="none"/>
-  <circle cx="60" cy="60" r="20" stroke="#c9922a" stroke-width="1" fill="none"/>
-  <circle cx="60" cy="60" r="35" stroke="#c9922a30" stroke-width="0.5" fill="none" stroke-dasharray="4 4"/>
-  <line x1="60" y1="10" x2="60" y2="110" stroke="#c9922a20" stroke-width="0.5"/>
-  <line x1="10" y1="60" x2="110" y2="60" stroke="#c9922a20" stroke-width="0.5"/>
+  <polygon points="60,10 110,85 10,85" stroke="#c9922a" stroke-width="2" fill="none"/>
+  <polygon points="60,110 10,35 110,35" stroke="#c9922a" stroke-width="1.2" fill="none"/>
+  <circle cx="60" cy="60" r="20" stroke="#c9922a" stroke-width="1.5" fill="none"/>
+  <circle cx="60" cy="60" r="35" stroke="#c9922a60" stroke-width="0.8" fill="none" stroke-dasharray="4 4"/>
+  <line x1="60" y1="10" x2="60" y2="110" stroke="#c9922a40" stroke-width="0.8"/>
+  <line x1="10" y1="60" x2="110" y2="60" stroke="#c9922a40" stroke-width="0.8"/>
   <circle cx="60" cy="60" r="4" fill="#c9922a"/>
 </svg>
