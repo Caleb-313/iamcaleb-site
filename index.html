@@ -945,19 +945,27 @@ if (client.getLocalPlayer().getAnimation() == -1 && !v.getWalking().isMoving()) 
 
     function highlight(code) {
       const keywords = ['int', 'boolean', 'if', 'return', 'new', 'null', 'true', 'false', 'TileObject', 'NPC'];
-      let out = code
-        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-      // comments
-      out = out.replace(/(\/\/[^\n]*)/g, '<span class="cm">$1</span>');
-      // strings
-      out = out.replace(/"([^"]*)"/g, '<span class="str">"$1"</span>');
-      // numbers (standalone)
-      out = out.replace(/\b(\d+)\b/g, '<span class="num">$1</span>');
-      // keywords
-      keywords.forEach(kw => {
-        out = out.replace(new RegExp(`\\b(${kw})\\b`, 'g'), '<span class="kw">$1</span>');
-      });
-      return out;
+      // Process line-by-line so comments are isolated and never double-escaped
+      return code.split('\n').map(line => {
+        const commentIdx = line.indexOf('//');
+        let main = commentIdx === -1 ? line : line.slice(0, commentIdx);
+        const comment = commentIdx === -1 ? '' : line.slice(commentIdx);
+
+        // Escape HTML in code portion
+        main = main.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        // Strings
+        main = main.replace(/"([^"]*)"/g, '<span class="str">"$1"</span>');
+        // Numbers
+        main = main.replace(/\b(\d+)\b/g, '<span class="num">$1</span>');
+        // Keywords
+        keywords.forEach(kw => {
+          main = main.replace(new RegExp(`\\b(${kw})\\b`, 'g'), '<span class="kw">$1</span>');
+        });
+
+        // Escape HTML in comment, then wrap
+        const safeComment = comment.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        return main + (safeComment ? `<span class="cm">${safeComment}</span>` : '');
+      }).join('\n');
     }
 
     let currentScriptId = null;
