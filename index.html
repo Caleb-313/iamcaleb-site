@@ -632,7 +632,10 @@
     <div class="modal-box">
       <div class="modal-header">
         <span id="modal-title" class="modal-title"></span>
-        <button class="modal-close" onclick="closeModal()">&times;</button>
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <button id="copy-btn" class="modal-close" style="font-family:'Share Tech Mono',monospace;font-size:0.7rem;letter-spacing:0.1em;padding:0.3rem 0.8rem;border:1px solid var(--rune-dim);color:var(--rune);background:transparent;cursor:pointer;transition:all 0.2s;" onclick="copyScript()">COPY</button>
+          <button class="modal-close" onclick="closeModal()">&times;</button>
+        </div>
       </div>
       <pre class="modal-code"><code id="modal-code"></code></pre>
     </div>
@@ -957,9 +960,23 @@ if (client.getLocalPlayer().getAnimation() == -1 && !v.getWalking().isMoving()) 
       return out;
     }
 
+    let currentScriptId = null;
+
+    function copyScript() {
+      if (!currentScriptId || !scripts[currentScriptId]) return;
+      navigator.clipboard.writeText(scripts[currentScriptId].code).then(() => {
+        const btn = document.getElementById('copy-btn');
+        btn.textContent = 'COPIED!';
+        btn.style.color = 'var(--rune)';
+        btn.style.borderColor = 'var(--rune)';
+        setTimeout(() => { btn.textContent = 'COPY'; btn.style.borderColor = 'var(--rune-dim)'; }, 1800);
+      });
+    }
+
     function openModal(id) {
       const script = scripts[id];
       if (!script) return;
+      currentScriptId = id;
       document.getElementById('modal-title').textContent = script.title;
       document.getElementById('modal-code').innerHTML = highlight(script.code);
       document.getElementById('script-modal').classList.add('active');
