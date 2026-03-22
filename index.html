@@ -407,6 +407,82 @@
       .nav-links { display: none; }
       .cards { grid-template-columns: 1fr; }
     }
+    /* ── MODAL ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: #000000cc;
+      backdrop-filter: blur(6px);
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background: var(--surface);
+      border: 1px solid var(--rune-dim);
+      box-shadow: 0 0 60px #4af0a020;
+      width: 100%;
+      max-width: 780px;
+      max-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .modal-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--rune);
+      letter-spacing: 0.05em;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 1.4rem;
+      cursor: pointer;
+      line-height: 1;
+      transition: color 0.2s;
+      padding: 0 0.2rem;
+    }
+
+    .modal-close:hover { color: var(--white); }
+
+    .modal-code {
+      overflow-y: auto;
+      padding: 1.5rem;
+      margin: 0;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.78rem;
+      line-height: 1.7;
+      color: var(--text);
+      white-space: pre;
+      flex: 1;
+    }
+
+    /* Syntax highlighting */
+    .modal-code .kw  { color: #4af0a0; }
+    .modal-code .cm  { color: var(--muted); font-style: italic; }
+    .modal-code .num { color: #c9922a; }
+    .modal-code .str { color: #e0a87a; }
   </style>
 </head>
 <body>
@@ -453,22 +529,40 @@
     </div>
     <div class="cards">
       <div class="card card-gold">
-        <span class="card-tag tag-gold">Mod</span>
-        <h3>Mod Title Here</h3>
-        <p>Short description of what this mod does, what it changes, and why players would want it.</p>
-        <a href="#" class="card-link link-gold">Download →</a>
+        <span class="card-tag tag-gold">Loot Filter</span>
+        <h3>Caleb's Loot Filter</h3>
+        <p>Improves drop readability with clearer, color-coded item icons and highlighted item modifiers. Designed for fast farming and online-safe compatibility across languages, input methods, and font modes.</p>
+        <a href="https://www.nexusmods.com/diablo2resurrected/mods/933" target="_blank" class="card-link link-gold">Download on Nexus →</a>
+      </div>
+      <div class="card card-gold">
+        <span class="card-tag tag-gold">Loot Filter</span>
+        <h3>Caleb's Loot Filter (D2RMM)</h3>
+        <p>Improves drop readability with clearer, color-coded item icons and highlighted item modifiers. Designed for fast farming and online-safe compatibility across languages, input methods, and font modes.</p>
+        <a href="https://www.nexusmods.com/diablo2resurrected/mods/968" target="_blank" class="card-link link-gold">Download on Nexus →</a>
+      </div>
+      <div class="card card-gold">
+        <span class="card-tag tag-gold">Loot Filter</span>
+        <h3>Caleb's In-Game Filter</h3>
+        <p>Loot filter rules with three difficulty presets (Normal/Nightmare/Hell). Hides low-value clutter and keeps useful drops visible for progression and farming, so important items are faster to spot. Switch presets as you advance through difficulties.</p>
+        <a href="https://www.nexusmods.com/diablo2resurrected/mods/949" target="_blank" class="card-link link-gold">Download on Nexus →</a>
+      </div>
+      <div class="card card-gold">
+        <span class="card-tag tag-gold">Loot Filter</span>
+        <h3>Caleb and Friends Loot Filter (13 Languages)</h3>
+        <p>Best loot filter on NexusMods (in our opinion). Has many QoL improvements thanks to other modders & our team. Works on Battle.net (safe). Supports all 13 languages & all input methods.</p>
+        <a href="https://www.nexusmods.com/diablo2resurrected/mods/323" target="_blank" class="card-link link-gold">Download on Nexus →</a>
       </div>
       <div class="card card-gold">
         <span class="card-tag tag-gold">Mod</span>
-        <h3>Mod Title Here</h3>
-        <p>Short description of what this mod does, what it changes, and why players would want it.</p>
-        <a href="#" class="card-link link-gold">Download →</a>
+        <h3>Area Levels (13 Languages)</h3>
+        <p>Shows all area levels in all 13 languages.</p>
+        <a href="https://www.nexusmods.com/diablo2resurrected/mods/479" target="_blank" class="card-link link-gold">Download on Nexus →</a>
       </div>
       <div class="card card-gold">
         <span class="card-tag tag-gold">Mod</span>
-        <h3>Mod Title Here</h3>
-        <p>Short description of what this mod does, what it changes, and why players would want it.</p>
-        <a href="#" class="card-link link-gold">Download →</a>
+        <h3>Skip Videos</h3>
+        <p>Removes launch & cinematic videos. No more clicking or holding to skip!</p>
+        <a href="https://www.nexusmods.com/diablo2resurrected/mods/331" target="_blank" class="card-link link-gold">Download on Nexus →</a>
       </div>
     </div>
   </section>
@@ -480,24 +574,42 @@
       <div class="section-line rune-line"></div>
     </div>
     <div class="cards">
+
       <div class="card card-rune">
-        <span class="card-tag tag-rune">Script</span>
-        <h3>Script Title Here</h3>
-        <p>What this script does, what skills it trains, and any requirements to run it.</p>
-        <a href="#" class="card-link link-rune">View Script →</a>
+        <span class="card-tag tag-rune">Fishing Script</span>
+        <h3>Catherby Lobster Fisher &amp; Banker</h3>
+        <p>Cage fishes lobsters at Catherby and banks automatically when inventory is full. Deposits raw lobsters and any clue bottles found while fishing.</p>
+        <a href="#" class="card-link link-rune" onclick="openModal('catherby-lobster'); return false;">View Script →</a>
       </div>
+
       <div class="card card-rune">
-        <span class="card-tag tag-rune">Script</span>
-        <h3>Script Title Here</h3>
-        <p>What this script does, what skills it trains, and any requirements to run it.</p>
-        <a href="#" class="card-link link-rune">View Script →</a>
+        <span class="card-tag tag-rune">Fishing Script</span>
+        <h3>Catherby Tuna/Swordfish Fisher &amp; Banker</h3>
+        <p>Harpoon fishes tuna and swordfish at Catherby and banks when full. Deposits tuna, swordfish, big swordfish, and any clue bottles found.</p>
+        <a href="#" class="card-link link-rune" onclick="openModal('catherby-tuna'); return false;">View Script →</a>
       </div>
+
       <div class="card card-rune">
-        <span class="card-tag tag-rune">Script</span>
-        <h3>Script Title Here</h3>
-        <p>What this script does, what skills it trains, and any requirements to run it.</p>
-        <a href="#" class="card-link link-rune">View Script →</a>
+        <span class="card-tag tag-rune">Fishing Script</span>
+        <h3>Draynor Net Fisher &amp; Banker</h3>
+        <p>Small net fishes shrimp and anchovies at Draynor Village and banks when full. Great for low-level Fishing training with zero requirements.</p>
+        <a href="#" class="card-link link-rune" onclick="openModal('draynor-net'); return false;">View Script →</a>
       </div>
+
+      <div class="card card-rune">
+        <span class="card-tag tag-rune">Fishing Script</span>
+        <h3>Fishing Guild Shark Fisher &amp; Banker</h3>
+        <p>Harpoon fishes sharks and big sharks inside the Fishing Guild and banks when full. Requires level 76 Fishing to enter the guild.</p>
+        <a href="#" class="card-link link-rune" onclick="openModal('fishing-guild'); return false;">View Script →</a>
+      </div>
+
+      <div class="card card-rune">
+        <span class="card-tag tag-rune">Fishing Script</span>
+        <h3>Fishing Trawler Leak Filler</h3>
+        <p>Automatically finds and fills leaks on the Fishing Trawler minigame boat. Keeps the hull intact so you spend less time bailing and more time earning loot.</p>
+        <a href="#" class="card-link link-rune" onclick="openModal('fishing-trawler'); return false;">View Script →</a>
+      </div>
+
     </div>
   </section>
 
@@ -515,6 +627,17 @@
     </div>
   </section>
 
+  <!-- SCRIPT MODAL -->
+  <div id="script-modal" class="modal-overlay" onclick="closeModal(event)">
+    <div class="modal-box">
+      <div class="modal-header">
+        <span id="modal-title" class="modal-title"></span>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <pre class="modal-code"><code id="modal-code"></code></pre>
+    </div>
+  </div>
+
   <footer>
     <p>© 2026 iamcaleb · iamcaleb.com · Built from scratch</p>
   </footer>
@@ -531,6 +654,330 @@
       span.style.animationDuration = (10 + Math.random() * 8) + 's';
       container.appendChild(span);
     }
+
+    // ── Script sources ──
+    const scripts = {
+      'catherby-lobster': {
+        title: 'Catherby Lobster Fisher & Banker',
+        code: `// === CONFIG ===
+int RAW_LOBSTER = 377;
+int FISHING_SPOT_NPC = 1519;
+int CAGE_ANIM = 619;
+int BANK_ID = 10355;
+int CLUE_BOTTLE_BEGINNER = 23129;
+int CLUE_BOTTLE_EASY = 13648;
+int CLUE_BOTTLE_MEDIUM = 13649;
+int CLUE_BOTTLE_HARD = 13650;
+int CLUE_BOTTLE_ELITE = 13651;
+// === BANKING ===
+if (v.getInventory().inventoryFull()) {
+    v.log("Inventory full, banking fish");
+    if (!v.getBank().isOpen()) {
+        v.getTileObject().search();
+        TileObject bank = v.getTileObject().findNearest(BANK_ID);
+        if (bank != null) {
+            v.getTileObject().invoke(bank, "Bank");
+            v.sleepUntil(8000, () -> v.getBank().isOpen());
+            v.sleep(600, 1000);
+        } else {
+            v.log("Bank booth not found");
+        }
+    }
+    if (v.getBank().isOpen()) {
+        v.getBank().depositAll(RAW_LOBSTER);
+        v.sleep(300, 600);
+        v.getBank().depositAll(CLUE_BOTTLE_BEGINNER);
+        v.sleep(300, 600);
+        v.getBank().depositAll(CLUE_BOTTLE_EASY);
+        v.sleep(300, 600);
+        v.getBank().depositAll(CLUE_BOTTLE_MEDIUM);
+        v.sleep(300, 600);
+        v.getBank().depositAll(CLUE_BOTTLE_HARD);
+        v.sleep(300, 600);
+        v.getBank().depositAll(CLUE_BOTTLE_ELITE);
+        v.sleepUntil(4000, () -> !v.getInventory().inventoryFull());
+        v.sleep(300, 600);
+        v.getBank().close();
+        v.sleep(300, 600);
+    }
+    return;
+}
+// === FISHING ===
+boolean idle = client.getLocalPlayer().getAnimation() == -1;
+boolean moving = v.getWalking().isMoving();
+if (idle && !moving) {
+    v.getNpc().search();
+    NPC spot = v.getNpc().findNearest(FISHING_SPOT_NPC);
+    if (spot != null) {
+        v.log("Cage fishing");
+        v.getNpc().invoke(spot, "Cage");
+        v.sleepUntil(6000, () -> v.getLocalPlayer().hasAnimation(CAGE_ANIM));
+        v.sleep(400, 800);
+    } else {
+        v.log("No spot found, walking to Catherby fishing area");
+        v.getWalking().packetWalk(new WorldPoint(2846, 3430, 0));
+        v.sleep(3000, 4000);
+    }
+}
+v.sleep(800, 1500);`
+      },
+      'catherby-tuna': {
+        title: 'Catherby Tuna/Swordfish Fisher & Banker',
+        code: `// === CONFIG ===
+int RAW_TUNA = 359;
+int RAW_SWORDFISH = 371;
+int BIG_SWORDFISH = 7991;
+int FISHING_SPOT_NPC = 1519;
+int HARPOON_ANIM = 5108;
+int BANK_ID = 10355;
+int CLUE_BOTTLE_BEGINNER = 23129;
+int CLUE_BOTTLE_EASY = 13648;
+int CLUE_BOTTLE_MEDIUM = 13649;
+int CLUE_BOTTLE_HARD = 13650;
+int CLUE_BOTTLE_ELITE = 13651;
+// === BANKING ===
+if (v.getInventory().inventoryFull()) {
+    v.log("Inventory full, banking fish");
+    if (!v.getBank().isOpen()) {
+        v.getTileObject().search();
+        TileObject bank = v.getTileObject().findNearest(BANK_ID);
+        if (bank != null) {
+            v.getTileObject().invoke(bank, "Bank");
+            v.sleepUntil(8000, () -> v.getBank().isOpen());
+            v.sleep(600, 1000);
+        } else {
+            v.log("Bank booth not found");
+        }
+    }
+    if (v.getBank().isOpen()) {
+        v.getBank().depositAll(RAW_TUNA);
+        v.sleep(300, 600);
+        v.getBank().depositAll(RAW_SWORDFISH);
+        v.sleep(300, 600);
+        v.getBank().depositAll(BIG_SWORDFISH);
+        v.sleep(300, 600);
+        v.getBank().depositAll(CLUE_BOTTLE_BEGINNER);
+        v.sleep(300, 600);
+        v.getBank().depositAll(CLUE_BOTTLE_EASY);
+        v.sleep(300, 600);
+        v.getBank().depositAll(CLUE_BOTTLE_MEDIUM);
+        v.sleep(300, 600);
+        v.getBank().depositAll(CLUE_BOTTLE_HARD);
+        v.sleep(300, 600);
+        v.getBank().depositAll(CLUE_BOTTLE_ELITE);
+        v.sleepUntil(4000, () -> !v.getInventory().inventoryFull());
+        v.sleep(300, 600);
+        v.getBank().close();
+        v.sleep(300, 600);
+    }
+    return;
+}
+// === FISHING ===
+boolean idle = client.getLocalPlayer().getAnimation() == -1;
+boolean moving = v.getWalking().isMoving();
+if (idle && !moving) {
+    v.getNpc().search();
+    NPC spot = v.getNpc().findNearest(FISHING_SPOT_NPC);
+    if (spot != null) {
+        v.log("Harpoon fishing");
+        v.getNpc().invoke(spot, "Harpoon");
+        v.sleepUntil(6000, () -> v.getLocalPlayer().hasAnimation(HARPOON_ANIM));
+        v.sleep(400, 800);
+    } else {
+        v.log("No spot found, walking to Catherby fishing area");
+        v.getWalking().packetWalk(new WorldPoint(2846, 3430, 0));
+        v.sleep(3000, 4000);
+    }
+}
+v.sleep(800, 1500);`
+      },
+      'draynor-net': {
+        title: 'Draynor Net Fisher & Banker',
+        code: `// === CONFIG ===
+int RAW_SHRIMP = 317;
+int RAW_ANCHOVIES = 321;
+int FISHING_SPOT_NPC = 1525;
+int NET_ANIM = 621;
+int BANK_ID = 10355;
+int CLUE_BOTTLE_BEGINNER = 23129;
+int CLUE_BOTTLE_EASY = 13648;
+int CLUE_BOTTLE_MEDIUM = 13649;
+int CLUE_BOTTLE_HARD = 13650;
+int CLUE_BOTTLE_ELITE = 13651;
+// === BANKING ===
+if (v.getInventory().inventoryFull()) {
+    v.log("Inventory full, banking fish");
+    if (!v.getBank().isOpen()) {
+        v.getTileObject().search();
+        TileObject bank = v.getTileObject().findNearest(BANK_ID);
+        if (bank != null) {
+            v.getTileObject().invoke(bank, "Bank");
+            v.sleepUntil(8000, () -> v.getBank().isOpen());
+            v.sleep(600, 1000);
+        } else {
+            v.log("Bank booth not found");
+        }
+    }
+    if (v.getBank().isOpen()) {
+        v.getBank().depositAll(RAW_SHRIMP);
+        v.sleep(300, 600);
+        v.getBank().depositAll(RAW_ANCHOVIES);
+        v.sleep(300, 600);
+        v.getBank().depositAll(CLUE_BOTTLE_BEGINNER);
+        v.sleep(300, 600);
+        v.getBank().depositAll(CLUE_BOTTLE_EASY);
+        v.sleep(300, 600);
+        v.getBank().depositAll(CLUE_BOTTLE_MEDIUM);
+        v.sleep(300, 600);
+        v.getBank().depositAll(CLUE_BOTTLE_HARD);
+        v.sleep(300, 600);
+        v.getBank().depositAll(CLUE_BOTTLE_ELITE);
+        v.sleepUntil(4000, () -> !v.getInventory().inventoryFull());
+        v.sleep(300, 600);
+        v.getBank().close();
+        v.sleep(300, 600);
+    }
+    return;
+}
+// === FISHING ===
+if (!v.getLocalPlayer().hasAnimation(NET_ANIM) && !v.getWalking().isMoving()) {
+    v.log("Finding fishing spot");
+    v.getNpc().search();
+    NPC spot = v.getNpc().findNearest(FISHING_SPOT_NPC);
+    if (spot != null) {
+        v.log("Net fishing");
+        v.getNpc().invoke(spot, "Small Net");
+        v.sleepUntil(6000, () -> v.getLocalPlayer().hasAnimation(NET_ANIM));
+        v.sleep(400, 800);
+    } else {
+        v.log("No fishing spot found, walking to fish area");
+        v.getWalking().walkR(new WorldPoint(3086, 3231, 0), 3);
+        v.sleep(2000, 3000);
+    }
+}
+v.sleep(800, 1500);`
+      },
+      'fishing-guild': {
+        title: 'Fishing Guild Shark Fisher & Banker',
+        code: `// === CONFIG ===
+int RAW_SHARK = 383;
+int BIG_SHARK = 7993;
+int FISHING_SPOT_NPC = 1511;
+int HARPOON_ANIM = 5108;
+int BANK_ID = 10355;
+int CLUE_BOTTLE_BEGINNER = 23129;
+int CLUE_BOTTLE_EASY = 13648;
+int CLUE_BOTTLE_MEDIUM = 13649;
+int CLUE_BOTTLE_HARD = 13650;
+int CLUE_BOTTLE_ELITE = 13651;
+// === BANKING ===
+if (v.getInventory().inventoryFull()) {
+    v.log("Inventory full, banking fish");
+    if (!v.getBank().isOpen()) {
+        v.getTileObject().search();
+        TileObject bank = v.getTileObject().findNearest(BANK_ID);
+        if (bank != null) {
+            v.getTileObject().invoke(bank, "Bank");
+            v.sleepUntil(8000, () -> v.getBank().isOpen());
+            v.sleep(600, 1000);
+        } else {
+            v.log("Bank booth not found");
+        }
+    }
+    if (v.getBank().isOpen()) {
+        v.getBank().depositAll(RAW_SHARK);
+        v.sleep(300, 600);
+        v.getBank().depositAll(BIG_SHARK);
+        v.sleep(300, 600);
+        v.getBank().depositAll(CLUE_BOTTLE_BEGINNER);
+        v.sleep(300, 600);
+        v.getBank().depositAll(CLUE_BOTTLE_EASY);
+        v.sleep(300, 600);
+        v.getBank().depositAll(CLUE_BOTTLE_MEDIUM);
+        v.sleep(300, 600);
+        v.getBank().depositAll(CLUE_BOTTLE_HARD);
+        v.sleep(300, 600);
+        v.getBank().depositAll(CLUE_BOTTLE_ELITE);
+        v.sleepUntil(4000, () -> !v.getInventory().inventoryFull());
+        v.sleep(300, 600);
+        v.getBank().close();
+        v.sleep(300, 600);
+    }
+    return;
+}
+// === FISHING ===
+boolean idle = client.getLocalPlayer().getAnimation() == -1;
+boolean moving = v.getWalking().isMoving();
+if (idle && !moving) {
+    v.getNpc().search();
+    NPC spot = v.getNpc().findNearest(FISHING_SPOT_NPC);
+    if (spot != null) {
+        v.log("Harpoon fishing");
+        v.getNpc().invoke(spot, "Harpoon");
+        v.sleepUntil(6000, () -> v.getLocalPlayer().hasAnimation(HARPOON_ANIM));
+        v.sleep(400, 800);
+    } else {
+        v.log("No spot found, walking to Fishing Guild fishing area");
+        v.getWalking().packetWalk(new WorldPoint(2593, 3415, 0));
+        v.sleep(1000, 2000);
+    }
+}
+v.sleep(800, 1500);`
+      },
+      'fishing-trawler': {
+        title: 'Fishing Trawler Leak Filler',
+        code: `// === CONFIG ===
+int[] LEAK_ID = [37353, 37354, 37355, 37356, 37357, 37358, 37359, 37360,
+                 37361, 37362, 37363, 37364, 37365, 37366, 37367, 37368];
+// === FILL LEAKS ===
+if (client.getLocalPlayer().getAnimation() == -1 && !v.getWalking().isMoving()) {
+    v.getTileObject().search();
+    TileObject leak = v.getTileObject().findNearest(LEAK_ID);
+    if (leak != null) {
+        v.getTileObject().invoke(leak, "Fill");
+    }
+}`
+      }
+    };
+
+    function highlight(code) {
+      const keywords = ['int', 'boolean', 'if', 'return', 'new', 'null', 'true', 'false', 'TileObject', 'NPC'];
+      let out = code
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      // comments
+      out = out.replace(/(\/\/[^\n]*)/g, '<span class="cm">$1</span>');
+      // strings
+      out = out.replace(/"([^"]*)"/g, '<span class="str">"$1"</span>');
+      // numbers (standalone)
+      out = out.replace(/\b(\d+)\b/g, '<span class="num">$1</span>');
+      // keywords
+      keywords.forEach(kw => {
+        out = out.replace(new RegExp(`\\b(${kw})\\b`, 'g'), '<span class="kw">$1</span>');
+      });
+      return out;
+    }
+
+    function openModal(id) {
+      const script = scripts[id];
+      if (!script) return;
+      document.getElementById('modal-title').textContent = script.title;
+      document.getElementById('modal-code').innerHTML = highlight(script.code);
+      document.getElementById('script-modal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(e) {
+      if (e && e.target !== document.getElementById('script-modal')) return;
+      document.getElementById('script-modal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        document.getElementById('script-modal').classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
   </script>
 </body>
 </html>
