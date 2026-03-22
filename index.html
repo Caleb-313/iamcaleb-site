@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>iamcaleb — Mods & Scripts</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:        #080608;
+      --surface:   #100d12;
+      --border:    #2a1f2e;
+      --gold:      #c9922a;
+      --gold-dim:  #7a5418;
+      --rune:      #4af0a0;
+      --rune-dim:  #1a6040;
+      --blood:     #8b1a1a;
+      --text:      #c8bfcf;
+      --muted:     #5a5060;
+      --white:     #ede8f2;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 400;
+      overflow-x: hidden;
+      cursor: crosshair;
+    }
+
+    /* ── Noise overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.04;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 2rem;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 40%, #1a0a0a88 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 20% 80%, #0a1a1044 0%, transparent 60%);
+    }
+
+    .hero-runes {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .hero-runes span {
+      position: absolute;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: clamp(10px, 1.2vw, 16px);
+      color: var(--rune-dim);
+      opacity: 0;
+      animation: floatRune 12s linear infinite;
+      white-space: nowrap;
+    }
+
+    @keyframes floatRune {
+      0%   { opacity: 0; transform: translateY(100vh) rotate(-5deg); }
+      10%  { opacity: 0.4; }
+      90%  { opacity: 0.2; }
+      100% { opacity: 0; transform: translateY(-10vh) rotate(5deg); }
+    }
+
+    .sigil {
+      width: 120px;
+      height: 120px;
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 1;
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { filter: drop-shadow(0 0 8px var(--gold)) drop-shadow(0 0 20px #7a541840); }
+      50%       { filter: drop-shadow(0 0 20px var(--gold)) drop-shadow(0 0 50px #c9922a60); }
+    }
+
+    .hero h1 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(2.2rem, 6vw, 5rem);
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: 0.05em;
+      line-height: 1.1;
+      position: relative;
+      z-index: 1;
+      text-shadow: 0 0 40px #c9922a60, 0 2px 0 #000;
+      animation: fadeDown 1s ease both;
+    }
+
+    .hero h1 span { color: var(--gold); }
+
+    .hero-sub {
+      margin-top: 1rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: clamp(0.75rem, 1.5vw, 1rem);
+      color: var(--muted);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      position: relative;
+      z-index: 1;
+      animation: fadeDown 1s 0.2s ease both;
+    }
+
+    .hero-divider {
+      width: 200px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+      margin: 2rem auto;
+      position: relative;
+      z-index: 1;
+      animation: fadeDown 1s 0.3s ease both;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+      animation: fadeDown 1s 0.4s ease both;
+    }
+
+    .btn {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.75rem 1.8rem;
+      border: 1px solid;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .btn:hover::before { opacity: 1; }
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-gold {
+      color: var(--gold);
+      border-color: var(--gold-dim);
+      background: #c9922a0a;
+    }
+    .btn-gold::before { background: #c9922a18; }
+    .btn-gold:hover { border-color: var(--gold); box-shadow: 0 0 20px #c9922a30; }
+
+    .btn-rune {
+      color: var(--rune);
+      border-color: var(--rune-dim);
+      background: #4af0a00a;
+    }
+    .btn-rune::before { background: #4af0a018; }
+    .btn-rune:hover { border-color: var(--rune); box-shadow: 0 0 20px #4af0a030; }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(180deg, #080608ee 0%, transparent 100%);
+      backdrop-filter: blur(4px);
+    }
+
+    .nav-logo {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1rem;
+      color: var(--gold);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--white); }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: 6rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .section-header h2 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(1.4rem, 3vw, 2.2rem);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .section-header h2.gold { color: var(--gold); }
+    .section-header h2.rune { color: var(--rune); }
+
+    .section-line {
+      flex: 1;
+      height: 1px;
+    }
+    .gold-line { background: linear-gradient(90deg, var(--gold-dim), transparent); }
+    .rune-line { background: linear-gradient(90deg, var(--rune-dim), transparent); }
+
+    /* ── CARDS ── */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 1.8rem;
+      position: relative;
+      transition: transform 0.2s, box-shadow 0.2s;
+      overflow: hidden;
+    }
+
+    .card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+
+    .card:hover { transform: translateY(-4px); }
+
+    .card-gold { border-left: 2px solid var(--gold-dim); }
+    .card-gold::after { background: linear-gradient(135deg, #c9922a08 0%, transparent 60%); }
+    .card-gold:hover { box-shadow: 0 8px 40px #c9922a18; border-color: var(--gold-dim); border-left-color: var(--gold); }
+    .card-gold:hover::after { opacity: 1; }
+
+    .card-rune { border-left: 2px solid var(--rune-dim); }
+    .card-rune::after { background: linear-gradient(135deg, #4af0a008 0%, transparent 60%); }
+    .card-rune:hover { box-shadow: 0 8px 40px #4af0a018; border-color: var(--rune-dim); border-left-color: var(--rune); }
+    .card-rune:hover::after { opacity: 1; }
+
+    .card-tag {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border: 1px solid;
+    }
+
+    .tag-gold { color: var(--gold); border-color: var(--gold-dim); background: #c9922a10; }
+    .tag-rune { color: var(--rune); border-color: var(--rune-dim); background: #4af0a010; }
+
+    .card h3 {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.05em;
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--text);
+      margin-bottom: 1.2rem;
+    }
+
+    .card-link {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: gap 0.2s;
+    }
+
+    .card-link:hover { gap: 0.9rem; }
+    .link-gold { color: var(--gold); }
+    .link-rune { color: var(--rune); }
+
+    /* ── CONTACT ── */
+    .contact-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .social-pill {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.7rem 1.4rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      text-decoration: none;
+      transition: all 0.2s;
+      background: var(--surface);
+    }
+
+    .social-pill:hover {
+      color: var(--white);
+      border-color: var(--gold-dim);
+      box-shadow: 0 0 15px #c9922a20;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--gold-dim); }
+
+    /* ── MOBILE ── */
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#">iamcaleb</a>
+    <ul class="nav-links">
+      <li><a href="#d2r">D2R Mods</a></li>
+      <li><a href="#osrs">OSRS Scripts</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-runes" id="runes"></div>
+
+    <!-- Sigil SVG -->
+    <svg class="sigil" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="60,10 110,85 10,85" stroke="#c9922a" stroke-width="1.5" fill="none"/>
+      <polygon points="60,110 10,35 110,35" stroke="#c9922a60" stroke-width="1" fill="none"/>
+      <circle cx="60" cy="60" r="20" stroke="#c9922a" stroke-width="1" fill="none"/>
+      <circle cx="60" cy="60" r="35" stroke="#c9922a30" stroke-width="0.5" fill="none" stroke-dasharray="4 4"/>
+      <line x1="60" y1="10" x2="60" y2="110" stroke="#c9922a20" stroke-width="0.5"/>
+      <line x1="10" y1="60" x2="110" y2="60" stroke="#c9922a20" stroke-width="0.5"/>
+      <circle cx="60" cy="60" r="4" fill="#c9922a"/>
+    </svg>
+
+    <h1>iam<span>caleb</span></h1>
+    <p class="hero-sub">Mods · Scripts · Digital Alchemy</p>
+    <div class="hero-divider"></div>
+    <div class="hero-cta">
+      <a href="#d2r" class="btn btn-gold">⚔ D2R Mods</a>
+      <a href="#osrs" class="btn btn-rune">☽ OSRS Scripts</a>
+    </div>
+  </div>
+
+  <!-- D2R MODS -->
+  <section id="d2r">
+    <div class="section-header">
+      <h2 class="gold">D2R Mods</h2>
+      <div class="section-line gold-line"></div>
+    </div>
+    <div class="cards">
+      <div class="card card-gold">
+        <span class="card-tag tag-gold">Mod</span>
+        <h3>Mod Title Here</h3>
+        <p>Short description of what this mod does, what it changes, and why players would want it.</p>
+        <a href="#" class="card-link link-gold">Download →</a>
+      </div>
+      <div class="card card-gold">
+        <span class="card-tag tag-gold">Mod</span>
+        <h3>Mod Title Here</h3>
+        <p>Short description of what this mod does, what it changes, and why players would want it.</p>
+        <a href="#" class="card-link link-gold">Download →</a>
+      </div>
+      <div class="card card-gold">
+        <span class="card-tag tag-gold">Mod</span>
+        <h3>Mod Title Here</h3>
+        <p>Short description of what this mod does, what it changes, and why players would want it.</p>
+        <a href="#" class="card-link link-gold">Download →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- OSRS SCRIPTS -->
+  <section id="osrs">
+    <div class="section-header">
+      <h2 class="rune">OSRS Scripts</h2>
+      <div class="section-line rune-line"></div>
+    </div>
+    <div class="cards">
+      <div class="card card-rune">
+        <span class="card-tag tag-rune">Script</span>
+        <h3>Script Title Here</h3>
+        <p>What this script does, what skills it trains, and any requirements to run it.</p>
+        <a href="#" class="card-link link-rune">View Script →</a>
+      </div>
+      <div class="card card-rune">
+        <span class="card-tag tag-rune">Script</span>
+        <h3>Script Title Here</h3>
+        <p>What this script does, what skills it trains, and any requirements to run it.</p>
+        <a href="#" class="card-link link-rune">View Script →</a>
+      </div>
+      <div class="card card-rune">
+        <span class="card-tag tag-rune">Script</span>
+        <h3>Script Title Here</h3>
+        <p>What this script does, what skills it trains, and any requirements to run it.</p>
+        <a href="#" class="card-link link-rune">View Script →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-header">
+      <h2 class="gold">Contact</h2>
+      <div class="section-line gold-line"></div>
+    </div>
+    <p style="color:var(--muted); font-size:1rem; line-height:1.7; max-width:500px;">
+      Questions about a mod or script? Reach out through any of the links below.
+    </p>
+    <div class="contact-wrap">
+      <a href="#" class="social-pill">GitHub</a>
+      <a href="#" class="social-pill">Discord</a>
+      <a href="#" class="social-pill">Reddit</a>
+      <a href="#" class="social-pill">Email</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 iamcaleb · iamcaleb.com · Built from scratch</p>
+  </footer>
+
+  <script>
+    // Floating rune characters
+    const runeChars = ['ᚠ','ᚢ','ᚦ','ᚨ','ᚱ','ᚲ','ᚷ','ᚹ','ᚺ','ᚾ','ᛁ','ᛃ','ᛇ','ᛈ','ᛉ','ᛊ','ᛏ','ᛒ','ᛖ','ᛗ','ᛚ','ᛜ','ᛞ','ᛟ'];
+    const container = document.getElementById('runes');
+    for (let i = 0; i < 18; i++) {
+      const span = document.createElement('span');
+      span.textContent = Array.from({length: Math.floor(Math.random()*4)+1}, () => runeChars[Math.floor(Math.random()*runeChars.length)]).join(' ');
+      span.style.left = Math.random() * 100 + '%';
+      span.style.animationDelay = (Math.random() * 12) + 's';
+      span.style.animationDuration = (10 + Math.random() * 8) + 's';
+      container.appendChild(span);
+    }
+  </script>
+</body>
+</html>
