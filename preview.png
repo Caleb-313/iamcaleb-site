@@ -1,0 +1,73 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#080608"/>
+
+  <!-- Radial glow behind sigil -->
+  <radialGradient id="glow" cx="50%" cy="46%" r="35%">
+    <stop offset="0%" stop-color="#1a0a0a" stop-opacity="1"/>
+    <stop offset="100%" stop-color="#080608" stop-opacity="0"/>
+  </radialGradient>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <!-- Corner decorations -->
+  <line x1="40" y1="40" x2="110" y2="40" stroke="#7a5418" stroke-width="1"/>
+  <line x1="40" y1="40" x2="40" y2="110" stroke="#7a5418" stroke-width="1"/>
+  <line x1="1160" y1="40" x2="1090" y2="40" stroke="#7a5418" stroke-width="1"/>
+  <line x1="1160" y1="40" x2="1160" y2="110" stroke="#7a5418" stroke-width="1"/>
+  <line x1="40" y1="590" x2="110" y2="590" stroke="#7a5418" stroke-width="1"/>
+  <line x1="40" y1="590" x2="40" y2="520" stroke="#7a5418" stroke-width="1"/>
+  <line x1="1160" y1="590" x2="1090" y2="590" stroke="#7a5418" stroke-width="1"/>
+  <line x1="1160" y1="590" x2="1160" y2="520" stroke="#7a5418" stroke-width="1"/>
+
+  <!-- SIGIL centered at 600, 240 — scaled up ~2.2x from original 120x120 -->
+  <!-- Original: viewBox 0 0 120 120, center 60,60 -->
+  <!-- Scale 2.2 → 264x264, center at 600,240 -->
+  <g transform="translate(600,240) scale(2.2) translate(-60,-60)">
+    <polygon points="60,10 110,85 10,85" stroke="#c9922a" stroke-width="1.5" fill="none"/>
+    <polygon points="60,110 10,35 110,35" stroke="#c9922a60" stroke-width="1" fill="none"/>
+    <circle cx="60" cy="60" r="20" stroke="#c9922a" stroke-width="1" fill="none"/>
+    <circle cx="60" cy="60" r="35" stroke="#c9922a30" stroke-width="0.5" fill="none" stroke-dasharray="4 4"/>
+    <line x1="60" y1="10" x2="60" y2="110" stroke="#c9922a20" stroke-width="0.5"/>
+    <line x1="10" y1="60" x2="110" y2="60" stroke="#c9922a20" stroke-width="0.5"/>
+    <circle cx="60" cy="60" r="4" fill="#c9922a"/>
+  </g>
+
+  <!-- Gold drop shadow effect behind text -->
+  <filter id="goldshadow">
+    <feGaussianBlur in="SourceGraphic" stdDeviation="18" result="blur"/>
+    <feColorMatrix in="blur" type="matrix"
+      values="1.2 0.6 0 0 0   0.6 0.3 0 0 0   0 0 0 0 0   0 0 0 0.6 0" result="goldblur"/>
+    <feMerge><feMergeNode in="goldblur"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+
+  <!-- Divider -->
+  <line x1="500" y1="422" x2="700" y2="422" stroke="#7a5418" stroke-width="1"/>
+
+  <!-- "iam" in white, "caleb" in gold — matching Cinzel Decorative style via Georgia serif fallback -->
+  <text filter="url(#goldshadow)" x="600" y="500"
+    font-family="'Cinzel Decorative', Georgia, serif"
+    font-size="74"
+    font-weight="900"
+    text-anchor="middle"
+    letter-spacing="3">
+    <tspan fill="#ede8f2">IAM</tspan><tspan fill="#c9922a">CALEB</tspan>
+  </text>
+
+  <!-- Subtitle in mono style -->
+  <text x="600" y="548"
+    font-family="'Share Tech Mono', 'Courier New', monospace"
+    font-size="15"
+    fill="#5a5060"
+    text-anchor="middle"
+    letter-spacing="8">MODS · SCRIPTS</text>
+
+  <!-- URL -->
+  <text x="600" y="592"
+    font-family="'Share Tech Mono', 'Courier New', monospace"
+    font-size="12"
+    fill="#2e2838"
+    text-anchor="middle"
+    letter-spacing="5">IAMCALEB.COM</text>
+
+</svg>
