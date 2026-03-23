@@ -402,9 +402,87 @@
     ::-webkit-scrollbar-track { background: var(--bg); }
     ::-webkit-scrollbar-thumb { background: var(--gold-dim); }
 
+    /* ── HAMBURGER ── */
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+      z-index: 200;
+    }
+
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--gold);
+      margin: 5px 0;
+      transition: all 0.3s ease;
+      border-radius: 1px;
+    }
+
+    .nav-hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    .nav-hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .nav-hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    .mobile-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #00000088;
+      z-index: 140;
+    }
+
+    .mobile-overlay.open {
+      display: block;
+    }
+
     /* ── MOBILE ── */
     @media (max-width: 600px) {
-      .nav-links { display: none; }
+      .nav-hamburger { display: block; }
+
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 260px;
+        height: 100vh;
+        background: var(--surface);
+        border-left: 1px solid var(--border);
+        flex-direction: column;
+        padding: 5rem 2rem 2rem;
+        gap: 0;
+        transition: right 0.3s ease;
+        z-index: 150;
+        box-shadow: -10px 0 40px #00000080;
+      }
+
+      .nav-links.open {
+        right: 0;
+      }
+
+      .nav-links li {
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav-links a {
+        display: block;
+        padding: 1rem 0;
+        font-size: 0.85rem;
+        color: var(--text);
+      }
+
+      .nav-links a:hover {
+        color: var(--gold);
+      }
+
       .cards { grid-template-columns: 1fr; }
     }
     /* ── MODAL ── */
@@ -490,12 +568,18 @@
   <!-- NAV -->
   <nav>
     <a class="nav-logo" href="#">iamcaleb</a>
-    <ul class="nav-links">
-      <li><a href="#d2r">D2R Mods</a></li>
-      <li><a href="#osrs">OSRS Scripts</a></li>
-      <li><a href="#contact">Contact</a></li>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#d2r" onclick="closeNav()">D2R Mods</a></li>
+      <li><a href="#osrs" onclick="closeNav()">OSRS Scripts</a></li>
+      <li><a href="#contact" onclick="closeNav()">Contact</a></li>
     </ul>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu" onclick="toggleNav()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </nav>
+  <div class="mobile-overlay" id="mobile-overlay" onclick="closeNav()"></div>
 
   <!-- HERO -->
   <div class="hero">
