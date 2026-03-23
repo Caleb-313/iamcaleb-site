@@ -1001,8 +1001,21 @@ if (client.getLocalPlayer().getAnimation() == -1 && !v.getWalking().isMoving()) 
       if (e.key === 'Escape') {
         document.getElementById('script-modal').classList.remove('active');
         document.body.style.overflow = '';
+        closeNav();
       }
     });
+
+    function toggleNav() {
+      document.getElementById('nav-links').classList.toggle('open');
+      document.getElementById('nav-hamburger').classList.toggle('active');
+      document.getElementById('mobile-overlay').classList.toggle('open');
+    }
+
+    function closeNav() {
+      document.getElementById('nav-links').classList.remove('open');
+      document.getElementById('nav-hamburger').classList.remove('active');
+      document.getElementById('mobile-overlay').classList.remove('open');
+    }
   </script>
 </body>
 </html>
